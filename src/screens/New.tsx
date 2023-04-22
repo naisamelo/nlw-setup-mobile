@@ -1,9 +1,25 @@
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { useState } from "react";
+import { ScrollView, Text, TextInput, View } from 'react-native';
 import { BackButton } from "../components/BackButton";
+import { Checkbox } from "../components/Checkbox";
+
+const availableWeekDays = ['Domingo', 'Segund-feira', 'Terça-feira', 'Quarta-geira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
 export function New(){
+  const [weekDays, setWeekDays] = useState<number[]>([]);
+
+  function handleToggleWeekDay(weekDayIndex: number){
+    if(weekDays.includes(weekDayIndex)){
+      setWeekDays((prevState) =>
+        prevState.filter((weekDay) => weekDay !== weekDayIndex),
+      );
+    } else {
+      setWeekDays(prevState => [...prevState, weekDayIndex])
+    }
+  }
+
   return (
-    <view className="flex-1 bg-backgrond px-8 pt-16">
+    <View className="flex-1 bg-backgrond px-8 pt-16">
       <ScrollView showsVerticalScrollIndicator={false}>
 
         <BackButton/>
@@ -16,11 +32,26 @@ export function New(){
           Qual seu comprometimento?
         </Text>
 
-        <TextInput className="h-12 pl-4 rounded-lg mt-3 bg-zinc-800 text-white focus:border-2 focus:border-green-600">
+        <TextInput 
+          className="h-12 pl-4 rounded-lg mt-3 bg-zinc-800 text-white focus:border-2 focus:border-green-600"
+        />
 
-        </TextInput>
+        <Text className='font-semibold mt-4 mb-3 text-white text-base'>
+          Qual a recorrência?
+        </Text>
+
+        {
+          availableWeekDays.map((weekDay, index) => (
+            <Checkbox
+              key={weekDay}
+              title={weekDay}
+              checked={weekDays.includes(index)}
+              onPress={() => handleToggleWeekDay(index)}
+            />
+          ))
+        }
 
       </ScrollView>
-    </view>
+    </View>
   )
-}
+}//2:00:47
