@@ -78,4 +78,4 @@ export function New(){
       </ScrollView>
     </View>
   )
-}//2:00:47
+}
